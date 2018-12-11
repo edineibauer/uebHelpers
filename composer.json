@@ -1,0 +1,23 @@
+{
+  "name": "ueb/helpers",
+  "description": "Classes de ajuda em geral para diversas tarefas secundárias",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Edinei J. Bauer",
+      "email": "edineibauer@gmail.com"
+    }
+  ],
+  "require": {
+    "smarty/smarty": "~3",
+    "php": "^7.1"
+  },
+  "autoload": {
+    "psr-0": {
+      "Helpers": "public/src/"
+    }
+  }
+}
+
+

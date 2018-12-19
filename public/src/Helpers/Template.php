@@ -166,6 +166,7 @@ class Template
         if (defined('VERSION')) $this->smart->assign("version", VERSION);
         if (defined('DOMINIO')) $this->smart->assign("dominio", DOMINIO);
         if (defined('VENDOR')) $this->smart->assign("vendor", VENDOR);
+        if (defined('AUTOSYNC')) $this->smart->assign("autosync", AUTOSYNC);
 
 
         if (file_exists(PATH_HOME . "public/assets/theme.min.css")) {

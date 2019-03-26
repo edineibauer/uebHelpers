@@ -318,7 +318,7 @@ class Helper
         try {
             $data = @file_get_contents($url, false, $context);
             return $data;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }

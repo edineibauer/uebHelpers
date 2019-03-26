@@ -41,11 +41,11 @@ class Helper
      */
     public static function convertImageJson($json): string
     {
-        if(empty($json))
+        if (empty($json))
             return "";
-        elseif(is_array($json) && !empty($json[0]['url']))
+        elseif (is_array($json) && !empty($json[0]['url']))
             return HOME . str_replace('\\', '/', $json[0]['url']);
-        elseif(Check::isJson($json) && preg_match('/url/i', $json))
+        elseif (Check::isJson($json) && preg_match('/url/i', $json))
             return HOME . str_replace('\\', '/', json_decode($json, true)[0]['url']);
 
         return "";
@@ -56,21 +56,22 @@ class Helper
      * @param string $colour
      * @return mixed
      */
-    public static function hex2rgb( string $colour ) {
-        if ( $colour[0] == '#' )
-            $colour = substr( $colour, 1 );
+    public static function hex2rgb(string $colour)
+    {
+        if ($colour[0] == '#')
+            $colour = substr($colour, 1);
 
-        if ( strlen( $colour ) == 6 )
-            list( $r, $g, $b ) = array( $colour[0] . $colour[1], $colour[2] . $colour[3], $colour[4] . $colour[5] );
-        elseif ( strlen( $colour ) == 3 )
-            list( $r, $g, $b ) = array( $colour[0] . $colour[0], $colour[1] . $colour[1], $colour[2] . $colour[2] );
+        if (strlen($colour) == 6)
+            list($r, $g, $b) = array($colour[0] . $colour[1], $colour[2] . $colour[3], $colour[4] . $colour[5]);
+        elseif (strlen($colour) == 3)
+            list($r, $g, $b) = array($colour[0] . $colour[0], $colour[1] . $colour[1], $colour[2] . $colour[2]);
         else
             return false;
 
-        $r = hexdec( $r );
-        $g = hexdec( $g );
-        $b = hexdec( $b );
-        return array( 'red' => $r, 'green' => $g, 'blue' => $b );
+        $r = hexdec($r);
+        $g = hexdec($g);
+        $b = hexdec($b);
+        return array('red' => $r, 'green' => $g, 'blue' => $b);
     }
 
     /**
@@ -79,7 +80,7 @@ class Helper
      */
     public static function cepAberto(string $cep)
     {
-        if(defined("CEPABERTO")) {
+        if (defined("CEPABERTO")) {
             $url = 'http://www.cepaberto.com/api/v3/cep?cep=' . $cep;
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
@@ -101,7 +102,7 @@ class Helper
     {
 
         foreach ($array as $i => $attr)
-            $array[$i] = (is_array($attr) ? self::convertStringToValueArray($attr) :  self::convertStringToValues($attr));
+            $array[$i] = (is_array($attr) ? self::convertStringToValueArray($attr) : self::convertStringToValues($attr));
 
         return $array;
     }
@@ -300,35 +301,6 @@ class Helper
     }
 
     /**
-     * <b>Envia um request POST:</b> usado para API request, obtem os dados do endereço informado
-     * @param $url STRING = url do site a ser feito o request
-     * @param $dados ARRAY = dados enviado ao request
-     * @return STRING = recebe a resposta do servidor
-     */
-    public static function postTo($url, $dados)
-    {
-        $store = "Parametro deve ser um array";
-        if (is_array($dados)) {
-            $dado = "";
-            foreach ($dados as $key => $value) {
-                $dado .= (empty($dado) ? "" : "&") . $key . "=" . $value;
-            }
-            $endereco = str_replace("&amp;", "&", urldecode(trim($url)));
-
-            $cookie = tempnam("/tmp", "CURLCOOKIE");
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $endereco);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $dado);
-            curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            $store = curl_exec($ch);
-            curl_close($ch);
-        }
-        return $store;
-    }
-
-    /**
      * Envia um POST REQUEST a uma url com data
      * obtem a resposta
      *
@@ -340,19 +312,15 @@ class Helper
     {
         $url = str_replace("&amp;", "&", urldecode(trim($url)));
 
-        if (Helper::isOnline($url)) {
-            $options = array('http' => array('header' => "Content-type: application/x-www-form-urlencoded\r\n", 'method' => 'POST', 'content' => http_build_query($data)));
-            $context = stream_context_create($options);
+        $options = array('http' => array('header' => "Content-type: application/x-www-form-urlencoded\r\n", 'method' => 'POST', 'content' => http_build_query($data)));
+        $context = stream_context_create($options);
 
-            try {
-                $data = @file_get_contents($url, false, $context);
-                return $data;
-            } catch (Exception $e) {
-                return false;
-            }
+        try {
+            $data = @file_get_contents($url, false, $context);
+            return $data;
+        } catch (Exception $e) {
+            return false;
         }
-
-        return false;
     }
 
     /**
@@ -405,25 +373,6 @@ class Helper
                 return "código de resposta {$response['http_code']}";
             }
         }
-    }
-
-    /**
-     * <b>Online:</b> Verifica se a url passada esta online e funcionando
-     * @param STRING $url = Url a ser verifica o status online
-     * @return BOOLEAN
-     */
-    public static function isOnline($url)
-    {
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_NOBODY, true);
-        curl_exec($ch);
-        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-        if ($code === 200):
-            return true;
-        endif;
-
-        return false;
     }
 
     /**

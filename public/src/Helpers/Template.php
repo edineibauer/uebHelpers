@@ -167,7 +167,7 @@ class Template
         if (defined('DOMINIO')) $this->smart->assign("dominio", DOMINIO);
         if (defined('VENDOR')) $this->smart->assign("vendor", VENDOR);
         if (defined('AUTOSYNC')) $this->smart->assign("autosync", AUTOSYNC);
-
+        if (defined('LIMITOFFLINE')) $this->smart->assign("limitoffline", LIMITOFFLINE);
 
         if (file_exists(PATH_HOME . "public/assets/theme.min.css")) {
             $f = file_get_contents(PATH_HOME . "public/assets/theme.min.css");

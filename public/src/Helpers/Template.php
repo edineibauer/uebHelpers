@@ -163,6 +163,7 @@ class Template
         if (defined('SITENAME')) $this->smart->assign("sitename", SITENAME);
         if (defined('SITESUB')) $this->smart->assign("sitesub", SITESUB);
         if (defined('SITEDESC')) $this->smart->assign("sitedesc", SITEDESC);
+        if (defined('HOMEPAGE')) $this->smart->assign("homepage", HOMEPAGE);
         if (defined('VERSION')) $this->smart->assign("version", VERSION);
         if (defined('DOMINIO')) $this->smart->assign("dominio", DOMINIO);
         if (defined('VENDOR')) $this->smart->assign("vendor", VENDOR);

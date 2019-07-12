@@ -156,6 +156,7 @@ class Template
         $this->smart->assign("date", date("d/m/Y"));
         $this->smart->assign("year", date("Y"));
         $this->smart->assign("hora", date("H:i"));
+        $this->smart->assign("user", $_SESSION['userlogin']);
         if (defined('HOME')) $this->smart->assign("home", HOME);
         if (defined('PATH_HOME')) $this->smart->assign("path_home", PATH_HOME);
         if (defined('LOGO')) $this->smart->assign("logo", LOGO);

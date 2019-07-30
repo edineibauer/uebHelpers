@@ -182,6 +182,14 @@ class Template
                     $this->smart->assign("theme", $themeb);
                 if (!empty($themec))
                     $this->smart->assign("themeColor", $themec);
+            } else if(preg_match('/\.theme \{/i', $f)) {
+                $theme = explode(".theme {", $f)[1];
+                $themeb = explode("!important", explode("background-color:", $theme)[1])[0];
+                $themec = explode("!important", explode("color:", $theme)[1])[0];
+                if (!empty($themeb))
+                    $this->smart->assign("theme", trim($themeb));
+                if (!empty($themec))
+                    $this->smart->assign("themeColor", trim($themec));
             } else {
                 $this->smart->assign("theme", "#2196f3");
                 $this->smart->assign("themeColor", "#ffffff");

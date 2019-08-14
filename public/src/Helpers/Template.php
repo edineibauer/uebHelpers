@@ -169,6 +169,7 @@ class Template
         if (defined('VERSION')) $this->smart->assign("version", VERSION);
         if (defined('DOMINIO')) $this->smart->assign("dominio", DOMINIO);
         if (defined('VENDOR')) $this->smart->assign("vendor", VENDOR);
+        if (defined('HOMEPAGE')) $this->smart->assign("homepage", HOMEPAGE);
         if (defined('AUTOSYNC')) $this->smart->assign("autosync", AUTOSYNC);
         if (defined('LIMITOFFLINE')) $this->smart->assign("limitoffline", LIMITOFFLINE);
 

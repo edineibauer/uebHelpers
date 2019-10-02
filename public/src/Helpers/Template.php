@@ -172,6 +172,7 @@ class Template
         if (defined('HOMEPAGE')) $this->smart->assign("homepage", HOMEPAGE);
         if (defined('AUTOSYNC')) $this->smart->assign("autosync", AUTOSYNC);
         if (defined('LIMITOFFLINE')) $this->smart->assign("limitoffline", LIMITOFFLINE);
+        if (defined('SERVICEWORKER')) $this->smart->assign("serviceworker", SERVICEWORKER);
 
         if (file_exists(PATH_HOME . "public/assets/theme.min.css")) {
             $f = file_get_contents(PATH_HOME . "public/assets/theme.min.css");

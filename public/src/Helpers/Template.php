@@ -159,6 +159,7 @@ class Template
         $this->smart->assign("user", json_encode((!empty($_SESSION['userlogin']) ? $_SESSION['userlogin'] : []), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
         $this->smart->assign("pushpublic", (defined('PUSH_PUBLIC_KEY') ? PUSH_PUBLIC_KEY : ""));
         if (defined('HOME')) $this->smart->assign("home", HOME);
+        if (defined('PUBLICO')) $this->smart->assign("publico", PUBLICO);
         if (defined('PATH_HOME')) $this->smart->assign("path_home", PATH_HOME);
         if (defined('LOGO')) $this->smart->assign("logo", LOGO);
         if (defined('FAVICON')) $this->smart->assign("favicon", FAVICON);

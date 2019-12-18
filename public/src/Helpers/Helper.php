@@ -33,6 +33,43 @@ class Helper
     }
 
     /**
+     * Copia pasta inteira para o destino
+     * @param string $src
+     * @param string $dst
+     */
+    public static function recurseCopy(string $src, string $dst) {
+        $dir = opendir($src);
+        @mkdir($dst);
+        while(false !== ( $file = readdir($dir)) ) {
+            if (( $file != '.' ) && ( $file != '..' )) {
+                if ( is_dir($src . '/' . $file) )
+                    Helper::recurseCopy($src . '/' . $file,$dst . '/' . $file);
+                else
+                    copy($src . '/' . $file,$dst . '/' . $file);
+            }
+        }
+        closedir($dir);
+    }
+
+    /**
+     * Exclui pasta inteira
+     * @param string $src
+     */
+    public static function recurseDelete(string $src) {
+        $dir = opendir($src);
+        while(false !== ( $file = readdir($dir)) ) {
+            if (( $file != '.' ) && ( $file != '..' )) {
+                if ( is_dir($src . '/' . $file) )
+                    Helper::recurseDelete($src . '/' . $file);
+                else
+                    unlink($src . '/' . $file);
+            }
+        }
+        closedir($dir);
+        rmdir($src);
+    }
+
+    /**
      * Verifica se o link esta online
      * @param string $url
      * @return bool

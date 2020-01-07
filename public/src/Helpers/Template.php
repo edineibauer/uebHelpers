@@ -161,6 +161,7 @@ class Template
             }
         }
         $this->smart->assign("user", json_encode($user, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+        $this->smart->assign("userName", $user['nome']);
         $this->smart->assign("datetime", date("d/m/Y H:i:s"));
         $this->smart->assign("date", date("d/m/Y"));
         $this->smart->assign("year", date("Y"));

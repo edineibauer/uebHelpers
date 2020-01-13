@@ -56,17 +56,19 @@ class Helper
      * @param string $src
      */
     public static function recurseDelete(string $src) {
-        $dir = opendir($src);
-        while(false !== ( $file = readdir($dir)) ) {
-            if (( $file != '.' ) && ( $file != '..' )) {
-                if ( is_dir($src . '/' . $file) )
-                    Helper::recurseDelete($src . '/' . $file);
-                else
-                    unlink($src . '/' . $file);
+        if(file_exists($src) && is_dir($src)) {
+            $dir = opendir($src);
+            while (false !== ($file = readdir($dir))) {
+                if (($file != '.') && ($file != '..')) {
+                    if (is_dir($src . '/' . $file))
+                        Helper::recurseDelete($src . '/' . $file);
+                    else
+                        unlink($src . '/' . $file);
+                }
             }
+            closedir($dir);
+            rmdir($src);
         }
-        closedir($dir);
-        rmdir($src);
     }
 
     /**

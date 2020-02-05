@@ -152,7 +152,7 @@ class Template
 
     private function preData()
     {
-        $user = (!empty($_SESSION['userlogin']) ? $_SESSION['userlogin'] : []);
+        /*$user = (!empty($_SESSION['userlogin']) ? $_SESSION['userlogin'] : []);
         if(!empty($user['setorData']) && is_array($user['setorData'])) {
             foreach ($user['setorData'] as $i => $setorDatum) {
                 if(is_string($setorDatum) && \Helpers\Check::isJson($setorDatum)) {
@@ -160,7 +160,8 @@ class Template
                 }
             }
         }
-        $this->smart->assign("user", json_encode($user, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+        $this->smart->assign("user", json_encode($user, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));*/
+
         $this->smart->assign("userName", !empty($user['nome']) ? $user['nome'] : "Anônimo");
         $this->smart->assign("userSetor", (!empty($_SESSION['userlogin']) ? $_SESSION['userlogin']['setor'] : "0"));
         $this->smart->assign("datetime", date("d/m/Y H:i:s"));

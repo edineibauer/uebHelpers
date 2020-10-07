@@ -72,6 +72,41 @@ class Helper
     }
 
     /**
+     * Copia pasta inteira para o destino
+     * @param string $filename
+     * @param string $dst
+     */
+    public static function ZipFiles(string $filename, string $dst)
+    {
+        $zip = new \ZipArchive();
+        $zip->open($filename, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+
+        // Create recursive directory iterator
+        /** @var SplFileInfo[] $files */
+        $files = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($dst),
+            \RecursiveIteratorIterator::LEAVES_ONLY
+        );
+
+        foreach ($files as $name => $file)
+        {
+            // Skip directories (they would be added automatically)
+            if (!$file->isDir())
+            {
+                // Get real and relative path for current file
+                $filePath = $file->getRealPath();
+                $relativePath = substr($filePath, strlen($dst) + 1);
+
+                // Add current file to archive
+                $zip->addFile($filePath, $relativePath);
+            }
+        }
+
+        // Zip archive will be created only after closing object
+        $zip->close();
+    }
+
+    /**
      * Verifica se o link esta online
      * @param string $url
      * @return bool

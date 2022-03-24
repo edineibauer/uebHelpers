@@ -95,8 +95,10 @@ class Helper
                 if (!$file->isDir()) {
                     // Get real and relative path for current file
                     $filePath = $file->getRealPath();
-                    $relativePath = substr($filePath, strlen($dst));
-                    $zip->addFile($file->getRealPath(), $file->getFileName());
+                    $relativePath = substr($filePath, strlen($dst) + 1);
+
+                    // Add current file to archive
+                    $zip->addFile($filePath, $relativePath);
                 }
             }
         } else {

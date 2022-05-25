@@ -86,18 +86,21 @@ class Helper
             // Create recursive directory iterator
             $files = new \RecursiveIteratorIterator(
                 new \RecursiveDirectoryIterator($dst),
-                \RecursiveIteratorIterator::LEAVES_ONLY
+                \RecursiveIteratorIterator::SELF_FIRST
             );
 
             foreach ($files as $name => $file)
             {
-                // Skip directories (they would be added automatically)
-                if (!$file->isDir()) {
-                    // Get real and relative path for current file
-                    $filePath = $file->getRealPath();
-                    $relativePath = substr($filePath, strlen($dst) + 1);
 
-                    // Add current file to archive
+                $filePath = $file->getRealPath();
+                $relativePath = str_replace('\\', '/', substr($filePath, strlen($dst) + 1));
+
+                if(in_array(substr($file, strrpos($file, '/')+1), ['.', '..']))
+                    continue;
+
+                if (is_dir($file)) {
+                    $zip->addEmptyDir($relativePath);
+                } else if (is_file($file)) {
                     $zip->addFile($filePath, $relativePath);
                 }
             }

@@ -171,7 +171,6 @@ class Template
         $this->smart->assign("pushpublic", (defined('PUSH_PUBLIC_KEY') ? PUSH_PUBLIC_KEY : ""));
         if (defined('HOME')) $this->smart->assign("home", HOME);
         if (defined('DEV')) $this->smart->assign("dev", DEV);
-        if (defined('PUBLICO')) $this->smart->assign("publico", PUBLICO);
         if (defined('PATH_HOME')) $this->smart->assign("path_home", PATH_HOME);
         if (defined('LOGO')) $this->smart->assign("logo", LOGO);
         if (defined('FAVICON')) $this->smart->assign("favicon", FAVICON);
@@ -182,9 +181,6 @@ class Template
         if (defined('VERSION')) $this->smart->assign("version", VERSION);
         if (defined('DOMINIO')) $this->smart->assign("dominio", DOMINIO);
         if (defined('VENDOR')) $this->smart->assign("vendor", VENDOR);
-        if (defined('HOMEPAGE')) $this->smart->assign("homepage", HOMEPAGE);
-        if (defined('AUTOSYNC')) $this->smart->assign("autosync", AUTOSYNC);
-        if (defined('LIMITOFFLINE')) $this->smart->assign("limitoffline", LIMITOFFLINE);
         if (defined('SERVICEWORKER')) $this->smart->assign("serviceworker", SERVICEWORKER);
 
         if (file_exists(PATH_HOME . "public/assets/theme.min.css")) {

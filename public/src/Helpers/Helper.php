@@ -370,8 +370,8 @@ class Helper
         $word[] = $temp;
         $string = implode('-', $word);
 
-        $a = array((defined('PRE') ? PRE : ''), ' ', '_', '-', '  ', '   ');
-        $b = array('', '-', '-', ' ', ' ', ' ');
+        $a = array(' ', '_', '-', '  ', '   ');
+        $b = array('-', '-', ' ', ' ', ' ');
         return ucwords(trim(str_replace($a, $b, $string)));
     }
 

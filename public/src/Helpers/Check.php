@@ -99,28 +99,27 @@ class Check
         return $maskared;
     }
 
-
-    /**
-     * @param string|null $name
-     * @param array $escape
-     * @return mixed
-     */
     public static function name(string $name = null, array $escape = [])
     {
-        $f = array();
-        $f['a'] = 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜüÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿRr|"!@#$%&*()_-+={[}]/?;:.,\\\'<>°ºª¹²³£¢¬™®★’`§☆●•…”“’‘♥♡■◎≈◉';
-        $f['b'] = "aaaaaaaceeeeiiiidnoooooouuuuuybsaaaaaaaceeeeiiiidnoooooouuuyybyRr                                                            ";
+        // Normaliza caracteres UTF-8 para sua forma mais simples (por exemplo, "é" se torna "e")
+        $data = iconv('UTF-8', 'ASCII//TRANSLIT', $name);
 
-        //escape some chars
-        if ($escape)
-            $f['a'] = str_replace($escape, "", $f['a']);
+        // Remove tags HTML
+        $data = strip_tags($data);
 
-        $data = strtr(utf8_decode($name), utf8_decode($f['a']), $f['b']);
-        $data = strip_tags(trim($data));
-        $data = str_replace(' ', '-', $data);
-        $data = str_replace(array('-----', '----', '---', '--'), '-', $data);
+        // Remove caracteres especiais ou não desejados
+        $data = preg_replace('/[^a-zA-Z0-9 \-_]/', '', $data);
 
-        return str_replace('?', '-', utf8_decode(strtolower(utf8_encode($data))));
+        // Substitui espaços e outros caracteres por hífens
+        $data = preg_replace('/[ \-]+/', '-', $data);
+
+        // Converte para minúsculas
+        $data = strtolower($data);
+
+        // Remove hífens extras
+        $data = trim($data, '-');
+
+        return $data;
     }
 
     /**

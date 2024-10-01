@@ -489,9 +489,11 @@ class Helper
 
     public static function createFolderIfNoExist($folder)
     {
-        if (!file_exists($folder) && !is_dir($folder)):
-            mkdir($folder, 0777);
-        endif;
+        if (!file_exists($folder) && !is_dir($folder)) {
+            if (!mkdir($folder, 0775, true)) {
+                echo "Erro ao criar o diretório: $folder";
+            }
+        }
     }
 
 

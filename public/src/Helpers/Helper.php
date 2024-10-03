@@ -492,6 +492,8 @@ class Helper
         if (!file_exists($folder) && !is_dir($folder)) {
             if (!mkdir($folder, 0775, true)) {
                 echo "Erro ao criar o diretório: $folder";
+            } else {
+                chmod($folder, 0775);
             }
         }
     }

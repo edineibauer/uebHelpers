@@ -109,25 +109,16 @@ class Check
         $f['b'] = "aaaaaaaceeeeiiiidnoooooouuuuuybsaaaaaaaceeeeiiiidnoooooouuuyybyRr                                                            ";
 
         // Escape some chars
-        if ($escape) {
+        //escape some chars
+        if ($escape)
             $f['a'] = str_replace($escape, "", $f['a']);
-        }
 
-        // Usar mb_convert_encoding ao invés de utf8_decode
-        $data = strtr($name, $f['a'], $f['b']);
+        $data = strtr(mb_convert_encoding($name, 'ISO-8859-1', 'UTF-8'), mb_convert_encoding($f['a'], 'ISO-8859-1', 'UTF-8'), $f['b']);
         $data = strip_tags(trim($data));
         $data = str_replace(' ', '-', $data);
         $data = str_replace(array('-----', '----', '---', '--'), '-', $data);
-        $data = str_replace('?', '-', $data);
 
-        // Converter para minúsculas usando mb_strtolower
-        $data = mb_strtolower($data, 'UTF-8');
-
-        // Remover múltiplos hífens no final
-        $data = preg_replace('/\-+$/', '', $data);
-        $data = preg_replace('/^\-+/', '', $data);
-
-        return $data;
+        return str_replace('?', '-', mb_convert_encoding(strtolower(mb_convert_encoding($data, 'UTF-8', 'ISO-8859-1')), 'ISO-8859-1', 'UTF-8'));
     }
 
     /**

@@ -101,20 +101,33 @@ class Check
 
     public static function name(string $name = null, array $escape = [])
     {
+        if ($name === null)
+            return '';
+
         $f = array();
         $f['a'] = 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜüÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿRr|"!@#$%&*()_-+={[}]/?;:.,\\\'<>°ºª¹²³£¢¬™®★’`§☆●•…”“’‘♥♡■◎≈◉';
         $f['b'] = "aaaaaaaceeeeiiiidnoooooouuuuuybsaaaaaaaceeeeiiiidnoooooouuuyybyRr                                                            ";
 
-        //escape some chars
-        if ($escape)
+        // Escape some chars
+        if ($escape) {
             $f['a'] = str_replace($escape, "", $f['a']);
+        }
 
-        $data = strtr(utf8_decode($name), utf8_decode($f['a']), $f['b']);
+        // Usar mb_convert_encoding ao invés de utf8_decode
+        $data = strtr($name, $f['a'], $f['b']);
         $data = strip_tags(trim($data));
         $data = str_replace(' ', '-', $data);
         $data = str_replace(array('-----', '----', '---', '--'), '-', $data);
+        $data = str_replace('?', '-', $data);
 
-        return str_replace('?', '-', utf8_decode(strtolower(utf8_encode($data))));
+        // Converter para minúsculas usando mb_strtolower
+        $data = mb_strtolower($data, 'UTF-8');
+
+        // Remover múltiplos hífens no final
+        $data = preg_replace('/\-+$/', '', $data);
+        $data = preg_replace('/^\-+/', '', $data);
+
+        return $data;
     }
 
     /**
